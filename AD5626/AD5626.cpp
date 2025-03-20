@@ -19,7 +19,7 @@ AD5626::AD5626(int _MOSIpin, int _SCLKpin, int _SYNCpin, int _SPI_HOST){
  * @brief   输出值设置
  * @param   value     电压值
  * @note    范围是0-4095
- * @note    作者仅使用了1024-3071范围
+ * @note    作者仅使用了1024-3071范围，即-2.5V-2.5V
  */
 void AD5626::writeValue(uint16_t value){
     spi_trans.length = 16;
