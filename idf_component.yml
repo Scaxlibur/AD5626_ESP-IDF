@@ -1,0 +1,5 @@
+dependencies:
+    idf: ">=4.4.1"
+    cmake_utilities: "0.*"
+    AD5626:
+        override_path: "./components/AD5626"

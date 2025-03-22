@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "AD5626.h"
+#include "AD5626/AD5626.h"
 
 /*
 #define MOSIpin GPIO_NUM_25
