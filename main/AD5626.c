@@ -1,4 +1,4 @@
-#include "AD5626.hpp"
+#include "AD5626.h"
 
  gpio_num_t LDAC_pin;
  spi_transaction_t spi_trans;
@@ -17,7 +17,6 @@ void resetLDAC(spi_transaction_t *spi_trans){
     gpio_set_level(LDAC_pin, 0);
 }
 
-
 void AD5626_writeValue(uint16_t value){
     txbuffer[0] = (uint8_t)(value >> 8);
     txbuffer[1] = (uint8_t)(value >> 0); 
@@ -25,7 +24,6 @@ void AD5626_writeValue(uint16_t value){
     spi_trans.tx_buffer = txbuffer;
     spi_device_polling_transmit(AD5626handle, &spi_trans);
 }
-
 
 void AD5626_init(gpio_num_t _MOSIpin  , gpio_num_t _SCLKpin, gpio_num_t _SYNCpin, gpio_num_t _LDACpin, spi_host_device_t _SPI_HOST){
     spi_bus_config.mosi_io_num = _MOSIpin;
@@ -56,4 +54,3 @@ void AD5626_init(gpio_num_t _MOSIpin  , gpio_num_t _SCLKpin, gpio_num_t _SYNCpin
     ESP_ERROR_CHECK(gpio_config(&LDAC_config));
 
 }
-

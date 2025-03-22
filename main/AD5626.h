@@ -1,5 +1,5 @@
-#ifndef __AD5626_HPP__
-#define __AD5626_hPP__
+#ifndef __AD5626_H__
+#define __AD5626_H__
 
 #include "driver/spi_master.h"
 #include "driver/gpio.h"

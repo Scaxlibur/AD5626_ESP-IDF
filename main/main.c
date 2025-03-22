@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include "AD5626.hpp"
-
+#include "AD5626.h"
 
 /*
 #define MOSIpin GPIO_NUM_25
@@ -11,7 +10,7 @@
 #define SPI_HOST SPI2_HOST
 */
 
-extern "C" void app_main(void)
+void app_main(void)
 {
     AD5626_init(GPIO_NUM_25, GPIO_NUM_5, GPIO_NUM_2, GPIO_NUM_21, SPI2_HOST);
 
