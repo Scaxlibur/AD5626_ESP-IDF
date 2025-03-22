@@ -1,44 +1,37 @@
-#pragma once
+#ifndef __AD5626_HPP__
+#define __AD5626_hPP__
 
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 
-/*
-#define MOSIpin GPIO_NUM_25
-#define SCLKpin GPIO_NUM_5
-#define SYNCpin GPIO_NUM_2
+/**
+ * @brief   初始化函数，填入相应引脚参数即可
+ * @param   _MOSIpin    芯片DI引脚，即数据输入引脚
+ * @param   _SCLKpin    时钟引脚
+ * @param   _SYNCpin    片选引脚
+ * @param   _LDACpin    DAC异步更新引脚
+ * @param   _SPI_HOST   使用的SPI外设
+ */
+void AD5626_init(gpio_num_t _MOSIpin  , gpio_num_t _SCLKpin, gpio_num_t _SYNCpin, gpio_num_t _LDACpin, spi_host_device_t _SPI_HOST);    void writeValue(uint16_t value);
 
-#define SPI_HOST SPI2_HOST
-*/
-class AD5626{
-    private:
-    int MOSIpin;
-    int SCLKpin;
-    int SYNCpin;
-    int SPI_HOST;
+/**
+ * @brief   输出值设置
+ * @param   value     电压值
+ * @note    范围是0-4095
+ * @note    作者使用双极性输出，0x000是正最大量程，0xfff是负最大量程
+ */
+void AD5626_writeValue(uint16_t value);
 
-    spi_bus_config_t spi_bus_config;
-    spi_bus_config.mosi_io_num = MOSIpin;
-    spi_bus_config.miso_io_num = -1;
-    spi_bus_config.sclk_io_num = SCLKpin;
-    spi_bus_config.flags = SPICOMMON_BUSFLAG_MASTER;
+/**
+ * @brief   发送前回调函数，拉高LDAC
+ * @param   *spi_trans  不要更改，和spi传递的结构体相同即可
+ */
+void setLDAC(spi_transaction_t *spi_trans);
 
-    spi_device_interface_config_t interface_config;
-    interface_config.command_bits = 0;
-    interface_config.address_bits = 0;
-    interface_config.mode = 3;
-    interface_config.clock_speed_hz = 1*1000*1000;
-    interface_config.spics_io_num = SYNCpin;
-    interface_config.queue_size = 6;
+/**
+ * @brief   发送后回调函数，拉低LDAC
+ * @param   *spi_trans  不要更改，和spi传递的结构体相同即可
+ */
+void resetLDAC(spi_transaction_t *spi_trans);
 
-    spi_transaction_t spi_trans;
-
-    void init();
-
-    public:
-    spi_device_handle_t AD5626handle = NULL;
-
-    AD5626(int _MOSIpin, int _SCLKpin, int _SYNCpin, int _SPI_HOST);
-    ~AD5626();
-    void writeValue(uint16_t value);
-};
+#endif
